@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState, lazy, Suspense, useCallback } from 'react';
 import { Box, IconButton, Typography, Button, Dialog, DialogTitle, DialogContent, DialogActions, Badge, Tooltip } from '@mui/material';
-import { AssignmentLateRounded, CloseRounded, CloudRounded, FlipCameraAndroidRounded, HomeRounded, MenuRounded, NotificationsRounded, ReportProblemRounded, ReportRounded, ThreePRounded } from '@mui/icons-material';
+import { AssignmentLateRounded, CloseRounded, CloudRounded, FlipCameraAndroidRounded, HomeRounded, MenuRounded, NotificationsRounded, PermScanWifiRounded, ReportProblemRounded, ReportRounded, SignalWifi4BarRounded, ThreePRounded } from '@mui/icons-material';
 import { useAuth } from '../api/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
@@ -211,11 +211,12 @@ const Dashboard = () => {
             </Box>
           </IconButton>
           </Tooltip>
+          {parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && 
           <Tooltip title='VCube Drive' arrow>
             <IconButton  onClick={() => setOpenDrive(true)}>
                 <CloudRounded sx={{ fontSize: '28px', color: 'white' }} />
             </IconButton>
-          </Tooltip>
+          </Tooltip>}
           <Tooltip title='Student Messages' arrow>
             <IconButton onClick={() => setStdMessages(true)}>
               <Badge badgeContent={stdMsgLen} color='error' max={99}>
@@ -249,7 +250,7 @@ const Dashboard = () => {
               </Badge>
             </IconButton>
           </Tooltip>}
-          {Array.isArray(studentAssignmentRequests) && studentAssignmentRequests.length > 0 &&
+          {Array.isArray(studentAssignmentRequests) && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && studentAssignmentRequests.length > 0 &&
           <Tooltip title='Student Assignmnet Requests' arrow>
             <IconButton onClick={() => setAssignmentRequests(true)}>
                 <Badge badgeContent={studentAssignmentRequests.length} color='error' max={99}>

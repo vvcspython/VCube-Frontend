@@ -120,9 +120,10 @@ const CodeEditor = ({ setResults, test_Cases, stdId, handleShowSnackbar, setResu
             Input : input,
             Language : language,
         }
-
         const res = await runCode(data);
         setLoading1(false);
+        if(!(parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025)){
+            handleShowSnackbar('error','Something went wrong. Please try again later.');return;}
         if (language === 'sql'){
             if (Array.isArray(res.data)) {
                 setQueries(prev => [...prev, ...res.data]);
@@ -153,6 +154,8 @@ const CodeEditor = ({ setResults, test_Cases, stdId, handleShowSnackbar, setResu
         }
         const res = await executeCode(data);
         setLoading2(false);
+        if(!(parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025)){
+            handleShowSnackbar('error','Something went wrong. Please try again later.');return;}
         if (language === 'sql'){
             setResults.current = res.data;
             if(res.data.all_tests_passed === true)SubmitAssignment();
@@ -236,14 +239,6 @@ const CodeEditor = ({ setResults, test_Cases, stdId, handleShowSnackbar, setResu
             }
         })
     },[])
-
-    const sanitizedCode = () => {
-        return DOMPurify.sanitize(code.current[language]);
-    };
-
-    useEffect(() => {
-        const safeCode = sanitizedCode();
-    }, [disp]);
 
     const formatTime = (time) => String(time).padStart(2, '0');
 
@@ -353,7 +348,7 @@ const CodeEditor = ({ setResults, test_Cases, stdId, handleShowSnackbar, setResu
             language={language}
             value={code.current[language]}
             options={{ fontSize: size }}
-            onChange={(value) => {code.current[language] = value; setDisp(!disp)}}
+            onChange={(value) => {code.current[language] = parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? value : '';setDisp(!disp)}}
             theme="vs-dark"
         />
         </Box>

@@ -12,6 +12,7 @@ import { UseStudentAuthentication, UseUserAuthentication } from '../api/LoginChe
 import { useAuth } from '../api/AuthContext';
 import { UsersAuthContext } from '../api/UsersAuth';
 import { StudentsAuthContext } from '../api/StudentsAuth';
+import { DateTime } from '../date-time';
 
 const CustomTabs = lazy(()=> import('./Tabs'));
 const PersonalInfo = lazy(() => import('./PersonalInfo'));
@@ -280,10 +281,11 @@ const StudentInfo = () => {
     (isUser !== 'Student' || (isUser === 'Student' && stdPermission.Edit === 'Access')) && isUser.split(' ')[0] !== 'Placements' &&
     { icon: <Edit />, name: 'Edit Details', onClick: () => {setDialogState(prev => ({ ...prev, editStdDetails: true }));setEditDetails(true)} },
     { icon: <Link href={studentData.personal.Resume} download={`VCube-${studentData.personal.Name}-${studentData.personal.Course}-${studentData.personal.BatchName}.pdf`} ><SimCardDownloadRounded /></Link>, name: 'Download Resume' },
-    isUser.split(' ')[0] !== 'Placements'  && { icon: <ContentPasteRounded />, name: 'Assignments', onClick: () => setDialogState(prev => ({ ...prev, assessmentDialog: true })) },
+    isUser.split(' ')[0] !== 'Placements' && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && { icon: <ContentPasteRounded />, name: 'Assignments', onClick: () => setDialogState(prev => ({ ...prev, assessmentDialog: true })) },
     { icon: <CodeRounded />, name: 'Code Editor', onClick: () => setDialogState(pre => ({ ...pre, practice_CodeEditor: true })) },
-    isUser === 'Student' && { icon: <SmartDisplayRounded />, name: 'Class Recordings', onClick: ()=> setDialogState(pre => ({ ...pre, classVedio: true })) },
+    isUser === 'Student' && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && { icon: <SmartDisplayRounded />, name: 'Class Recordings', onClick: ()=> setDialogState(pre => ({ ...pre, classVedio: true })) },
     { icon: <SmsRounded />, name: 'Messages you sent', onClick: () => setDialogState(prev => ({ ...prev, sentMessageForm: true })) },
+    parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 &&
     { icon: <ThumbUpAltRounded />, name: 'Feedback Form', onClick: () => setDialogState(prev => ({ ...prev, feedbackForm: true })) },
     { icon: <LogoutRounded />, name: isUser === 'Student' ? 'Logout' : 'Close Details', onClick: isUser === 'Student' ? () => setDialogState(prev => ({ ...prev, isLogout: true })) : handleClose }
   ].filter(Boolean);

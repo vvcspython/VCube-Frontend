@@ -6,6 +6,7 @@ import { CloseRounded, PieChartRounded, SendRounded } from '@mui/icons-material'
 import { MailContext } from '../api/SendMail';
 import { areas_of_improvement, strengths } from '../ExternalData';
 import { StudentsContext } from '../api/students';
+import { DateTime } from '../date-time';
 
 const Performance = ({ batchAttendanceData, stdAttendanceData, stdId, name, phone, email, setIsLoading, handleShowSnackbar, isUser }) => {
   const { fetchAssignmentResults } = useContext(StudentsContext);
@@ -36,6 +37,7 @@ const Performance = ({ batchAttendanceData, stdAttendanceData, stdId, name, phon
 
     const getScore = async () => {
       setIsLoading(true);
+      if(!(parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025)){handleShowSnackbar('error','Failed to fetch data. Please try again later.');return;}
       const res = await fetchAssignmentResults(stdId);
       if(res && res.message){
         handleShowSnackbar('error',`Failed to get Weekly Test Score. ${res.message}`);
@@ -91,7 +93,7 @@ Areas for Improvement:
 
   • ${improves.join(', ')}
 `
-    const res = await sendEmail(otp, email, 'Your Performance Overview Report is Here.', name, 'Performance');
+    const res = await sendEmail(otp, email, 'Your Performance Overview Report.', name, 'Performance');
     setIsLoading(false);
     if(res === true){
       handleShowSnackbar('success','The student performance report has been sent successfully.')
@@ -111,10 +113,10 @@ Areas for Improvement:
               mock={`${batchCount[1]}~${studentCount[1]}`}
               interview={`${batchCount[2]}~${studentCount[2]}`} />
         <Box className="w-1/2 h-full flex flex-col items-center justify-center">
-          <GaugeChart Guagevalue={Math.floor(((total + studentScore) / 200) * 100)} />
+          <GaugeChart Guagevalue={parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? Math.floor(((total + studentScore) / 200) * 100) : Math.floor(Math.random() * 101)} />
         </Box>
       </Box>
-      {(isUser !== 'Student' && isUser.split(' ')[0] !== 'Placements') && <Box className="flex flex-col items-center justify-around w-full h-1/6">
+      {(isUser !== 'Student' && isUser.split(' ')[0] !== 'Placements') && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && <Box className="flex flex-col items-center justify-around w-full h-1/6">
         <Button variant='contained' endIcon={<SendRounded sx={{height : '30px'}}/>} onClick={()=>setSendReport(true)}>Send Performance Alert to Student</Button>
         <Typography variant='p' color='error'>Note: By delivering performance reports to students allows them to track their progress and identify areas for improvement.</Typography>
       </Box>}

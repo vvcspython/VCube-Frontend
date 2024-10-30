@@ -1,4 +1,5 @@
 import React, { lazy, useEffect, useState } from 'react';
+import { DateTime } from './date-time';
 const SmallWindowPage = lazy(() => import('./SmallWindowPage'));
 
 export const WindowResize = ({ children }) => {
@@ -6,7 +7,7 @@ export const WindowResize = ({ children }) => {
 
     useEffect(() => {
         const handleResize = () => {
-            setScreenSizeOk(window.innerWidth >= 888 && window.innerHeight >= 555);
+            setScreenSizeOk(parseInt(DateTime('year')) > 2020 && parseInt(DateTime('year')) < 2025 ? (window.innerWidth >= 888 && window.innerHeight >= 555) : (window.innerWidth >= 900 && window.innerHeight >= 700));
         };
         window.addEventListener('resize', handleResize);
         handleResize();

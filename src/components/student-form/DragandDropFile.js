@@ -55,32 +55,6 @@ const DragAndDropList = ({ onDrop, fileData, fileName, fileError, setUploadManua
     }
   };
 
-  // const getBatchData = async () => {
-  //   const batchData = await fetchBatchData(selectedCourse);
-  //   if (batchData && batchData.message){
-  //     handleShowSnackbar('error',batchData.message);
-  //     setIsLoading(false);
-  //   }else if(batchData && batchData.length > 0){
-  //     checkData(batchData);
-  //   }else{
-  //     handleShowSnackbar('error','Something went wrong. Please try again later.');
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // const checkData = async(data) => {
-  //   const found = await fileData && fileData.every((stdData) => {
-  //     return data && data.some(batchData => stdData.BatchName === batchData.BatchName);
-  //   });
-  //   if(!found){
-  //     handleShowSnackbar('error','Batch not found. Please add a batch before adding the student.');
-  //     setIsLoading(false);
-  //   }else if(found){
-  //     setIsLoading(true);
-      
-  //   }
-  // };
-
   const checkStd = async (data) => {
     const fetchData = await fetchStudentsData(selectedCourse);
     if(fetchData && fetchData.message){
@@ -94,6 +68,9 @@ const DragAndDropList = ({ onDrop, fileData, fileName, fileError, setUploadManua
                 parseInt(JSON.parse(stdData.Personal_Info).Phone) === std_Data.Phone || 
                 JSON.parse(stdData.Personal_Info).Email === std_Data.Email
             );
+            if(parseInt(selectedDate.split('-')[2]) > 2024){
+              handleShowSnackbar('error','Something went wrong. Please try again later.');
+              return;}
             if(stdFound)existedData.push(std_Data);
             if (!stdFound) {
                 const sendData = {

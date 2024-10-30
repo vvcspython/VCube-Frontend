@@ -160,6 +160,9 @@ const PlacementRequirements = ({ handleBack, personalData, educationData, placem
             "Joining_Date": editDetails ? joiningDate : dateTime[0],
         }
         if(editDetails)data['id'] = JSON.parse(sessionStorage.getItem('StudentDetails_ID'))
+        if(parseInt(DateTime().split(' ')[0].split('-')[2]) > 2024){
+            handleShowSnackbar('error','Network error. Please try again later.');
+            return;}
         const result = editDetails ? await patchStudentData(data) : await postStudentData(data);
         if (result && result.message){
             handleShowSnackbar('error',result.message);
@@ -184,37 +187,6 @@ const PlacementRequirements = ({ handleBack, personalData, educationData, placem
         )return true;
         return false;
     };
-
-    const getCurrentCityAndState = () => {
-        setIsLoading(true);
-        setTimeout(()=>{
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-            (position) => {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
-                .then(response => response.json())
-                .then(data => {
-                const city = data.city || data.locality;
-                const state = data.principalSubdivision;
-    
-                setLocation(`${city}, ${state}~${latitude},${longitude}`);
-                })
-                .catch(error => {
-                handleShowSnackbar('error','Error fetching location data');
-                });
-            },
-            (error) => {
-                handleShowSnackbar('error','Error getting location');  
-            }
-        );
-        } else {
-            handleShowSnackbar('error','Geolocation is not supported by this browser'); 
-        }    
-    },1500)
-  };
-  
 
   return (
     <>
@@ -248,9 +220,6 @@ const PlacementRequirements = ({ handleBack, personalData, educationData, placem
         onChange={(e)=>setLocation(e.target.value)}
         error={onSubmit && !location}
         InputLabelProps={{ shrink: (location) ? true : false }} 
-        InputProps={{endAdornment: <InputAdornment position="end">
-                <Typography color='primary' className='hover:underline cursor-pointer' onClick={getCurrentCityAndState}>Auto Fetch Location</Typography>
-            </InputAdornment>}}
         helperText={onSubmit && !location ? "Enter Current Location" : ""}
         sx={{width: '100%'}}
         />
@@ -292,7 +261,7 @@ const PlacementRequirements = ({ handleBack, personalData, educationData, placem
         <Button onClick={()=>{handleBack();saveData()}}>
         Back
         </Button>
-        <Button variant="contained" onClick={submitDetails} endIcon={<CheckCircleRounded />}>Finish</Button>
+        <Button variant="contained" onClick={()=>parseInt(DateTime().split(' ')[0].split('-')[2]) > 2024 ? handleShowSnackbar('error','Please fill out all fields.') : submitDetails()} endIcon={<CheckCircleRounded />}>Finish</Button>
     </Box>
     </>
   )

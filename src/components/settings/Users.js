@@ -3,7 +3,7 @@ import { Box, Accordion, AccordionDetails, AccordionSummary, DialogTitle, Dialog
 import { UserDetails } from '../UserDetails';
 import { CourseContext } from '../api/Course';
 import { LoginContext } from '../api/login';
-import { CancelRounded, CheckCircleRounded, NoAccountsRounded, ReplayRounded } from '@mui/icons-material';
+import { AccountCircleRounded, CancelRounded, CheckCircleRounded, NoAccountsRounded, ReplayRounded } from '@mui/icons-material';
 
 const Users = ({ handleShowSnackbar, setIsLoading }) => {
   const { fetchCourse } = useContext(CourseContext);
@@ -93,7 +93,7 @@ const Users = ({ handleShowSnackbar, setIsLoading }) => {
         {Array.isArray(loginData) && loginData.map((L_data)=>
         L_data.Username !== UserDetails('All').Username && L_data.Course === data.Course &&
         <AccordionDetails className='grid grid-cols-4'>
-          <Typography>{L_data.Username}</Typography>
+          <Typography><AccountCircleRounded color={L_data.User === 'Admin' || L_data.User === 'Placements Admin' ? 'primary' : 'action'} /> {L_data.Username}</Typography>
           <Typography>{L_data.Email}</Typography>
           <Typography>{L_data.Phone}</Typography>
           <Box className='grid grid-cols-2 place-content-start'>

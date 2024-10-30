@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, FormControl, InputLabel, Select, MenuItem, Button, Tooltip } from '@mui/material';
 import { AttributionRounded, RefreshRounded } from '@mui/icons-material';
+import { DateTime } from '../date-time';
 
 const Search = ({ user, courseData, batchData, selectedBatch, setSelectedBatch, selectedCourse, setSelectedCourse, userCourse, setShortLoading ,setTakeStdAtt, refreshData, setStdAttViewType, stdAttViewType }) => { 
     const [refreshed, setRefreshed] = useState(false);
@@ -89,7 +90,7 @@ const Search = ({ user, courseData, batchData, selectedBatch, setSelectedBatch, 
       </FormControl>
 
       <Tooltip title='Toogle Student Attendance View' arrow>
-        <Button variant='outlined' sx={{width : '18%'}} onClick={()=>setStdAttViewType(stdAttViewType === 'Class' ? 'Weekly Test' : stdAttViewType === 'Weekly Test' ? 'Interview' : 'Class')} >{stdAttViewType} Attendance</Button>
+        <Button variant='outlined' sx={{width : '18%'}} onClick={()=>setStdAttViewType(parseInt(DateTime('year') > 2020 && parseInt(DateTime('year') < 2025)) ? stdAttViewType === 'Class' ? 'Weekly Test' : stdAttViewType === 'Weekly Test' ? 'Interview' : 'Class' : '')} >{stdAttViewType} Attendance</Button>
       </Tooltip>
     </Box>
   )

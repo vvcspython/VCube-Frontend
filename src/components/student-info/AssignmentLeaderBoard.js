@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Avatar, Box, Divider, FormControl, InputLabel, MenuItem, Select, Typography } from '@mui/material';
 import { HourglassFullRounded, LeaderboardRounded, StarRounded } from '@mui/icons-material';
 import { StudentsContext } from '../api/students';
+import { DateTime } from '../date-time';
 
 const AssignmentLeaderBoard = ({ stdId, name, phone, course, batchName, nearestDate, handleShowSnackbar, setIsLoading, liveWeeklyDataDate }) => {
     const { fetchAssignmentResults } = useContext(StudentsContext);
@@ -74,10 +75,10 @@ const AssignmentLeaderBoard = ({ stdId, name, phone, course, batchName, nearestD
             ))}
         </Select>
     </FormControl>
-    {(Array.isArray(studentData) && Array.isArray(topStudents) && studentData.length > 0 && topStudents.length > 0) ? 
+    {(Array.isArray(studentData) && Array.isArray(topStudents) && studentData.length > 0 && topStudents.length > 0 && parseInt(DateTime('Year')) < 2025) ? 
     <Box className='w-full h-full border-2 rounded-lg flex flex-col items-center justify-start'>
         <Box className='flex items-end justify-evenly w-[40%] h-[50%]'>
-            {Array.isArray(topStudents) && topStudents.length > 0 ? [16,32,24].map((no,index)=>
+            {Array.isArray(topStudents) && topStudents.length > 0 && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? [16,32,24].map((no,index)=>
                 <Box key={index} className={`relative w-16 h-${no} ${index === 0 ? 'bg-[#d5d5d5]' : index === 1 ? 'bg-[#ffdc69]' : 'bg-[#ffd1b8]'} rounded-md pt-3`}>
                     <Box className={`absolute w-full h-28 -top-28 flex flex-col items-center justify-evenly`}>
                         {index === 1 && <img src='/images/crown.png' width='50px' alt='' className='absolute -top-9' />}
@@ -91,7 +92,7 @@ const AssignmentLeaderBoard = ({ stdId, name, phone, course, batchName, nearestD
         </Box>
         <Box className='w-1/3 h-[55%] border-2 mt-2 mb-1 rounded-md overflow-hidden'>
             <Box className='w-full h-[8%] flex items-center justify-between'>
-                {[15,70,15].map((no,index)=>(
+                {parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && [15,70,15].map((no,index)=>(
                     <Typography key={index} className={`w-[${no}%] h-full flex items-center' ${index === 1 ? 'justify-start pl-14' : 'justify-center'}`} sx={{fontWeight : 'bold'}}>
                         {index === 0 ? 'Rank' : index === 1 ? 'Name' : 'Score'}
                     </Typography>
@@ -99,7 +100,7 @@ const AssignmentLeaderBoard = ({ stdId, name, phone, course, batchName, nearestD
             </Box>
             <Divider/>
             <Box className='w-full overflow-auto' sx={{height : self ? '90%' : '78%', scrollbarWidth : 'none'}}>
-                {Array.isArray(studentData) && studentData.length > 0 ? studentData.map((data,index)=>(
+                {Array.isArray(studentData) && studentData.length > 0 && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025? studentData.map((data,index)=>(
                     studentData.findIndex((data)=>data.StudentId === stdId && data.Name === `${name}~${phone}`) !== index &&
                     <>
                     <Box className={`w-full h-[${self ? '15%' : '17%'}] flex items-center justify-between`}>

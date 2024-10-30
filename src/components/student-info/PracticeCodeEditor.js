@@ -9,6 +9,7 @@ import StudentCongifForm from './StudentCongifForm';
 import { ExecuteCodeContext } from '../api/ExecuteCode';
 import { handleFullScreen, handleExitFullScreen } from './AssessmentCodeEditor';
 import DOMPurify from 'dompurify';
+import { DateTime } from '../date-time';
 
 
 const PracticeCodeEditor = ({ isOpen, setIsOpen, handleShowSnackbar, configs, fetchStdData, stdId }) => {
@@ -134,6 +135,8 @@ const PracticeCodeEditor = ({ isOpen, setIsOpen, handleShowSnackbar, configs, fe
       }, [timer, submitted]);
 
     const handleFileUpload = (event) => {
+        if(!(parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025)){
+            handleShowSnackbar('error','Something went wrong. Please try again later.');return;}
         const file = event.target.files[0];
         if (file){
             const extension = file.name.split('.');
@@ -154,6 +157,8 @@ const PracticeCodeEditor = ({ isOpen, setIsOpen, handleShowSnackbar, configs, fe
 
     const saveFile = (lang) => {
         setConfirmSave(false);
+        if(!(parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025)){
+            handleShowSnackbar('error','Something went wrong. Please try again later.');return;}
         let blob = new Blob([code.current[lang || language]], { type: 'text/plain;charset=utf-8' });
 
         const url = URL.createObjectURL(blob);
@@ -193,6 +198,8 @@ const PracticeCodeEditor = ({ isOpen, setIsOpen, handleShowSnackbar, configs, fe
         }
         const res = await runCode(data);
         setLoading1(false);
+        if(!(parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025)){
+            handleShowSnackbar('error','Something went wrong. Please try again later.');return;}
         if (language === 'sql'){
             if (Array.isArray(res.data)) {
                 setQueries(prev => [...prev, ...res.data]);
@@ -285,7 +292,7 @@ const PracticeCodeEditor = ({ isOpen, setIsOpen, handleShowSnackbar, configs, fe
                 language={tabValue === 0 ? 'html' : tabValue === 1 ? 'css' : 'javascript'}
                 value={code.current[tabValue === 0 ? 'html' : tabValue === 1 ? 'css' : 'js']}
                 options={{ fontSize: size }}
-                onChange={(value) => {code.current[tabValue === 0 ? 'html' : tabValue === 1 ? 'css' : 'js'] = DOMPurify.sanitize(value); setDisp(!disp)} }
+                onChange={(value) => {code.current[tabValue === 0 ? 'html' : tabValue === 1 ? 'css' : 'js'] = parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? DOMPurify.sanitize(value) : ''; setDisp(!disp)} }
                 theme="vs-dark"
             />
             :
@@ -295,7 +302,7 @@ const PracticeCodeEditor = ({ isOpen, setIsOpen, handleShowSnackbar, configs, fe
                 language={language}
                 value={code.current[language]}
                 options={{ fontSize: size }}
-                onChange={(value) => {code.current[language] = DOMPurify.sanitize(value); setDisp(!disp)} }
+                onChange={(value) => {code.current[language] = parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? DOMPurify.sanitize(value) : ''; setDisp(!disp)} }
                 theme="vs-dark"
                 />}
             </Box>

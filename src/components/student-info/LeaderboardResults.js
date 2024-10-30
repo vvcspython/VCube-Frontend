@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, Typography } from '@mui/material';
 import { CloseRounded, LeaderboardRounded, StarRounded } from '@mui/icons-material';
 import { StudentsContext } from '../api/students';
+import { DateTime } from '../date-time';
 
 const LeaderboardResults = ({ isOpen, setIsOpen, stdId, course, batchName, handleShowSnackbar, setIsLoading, batchAttendanceData }) => {
     const { getStudentAttendanceByCourse, fetchStudentsData, fetchAssignmentResults } = useContext(StudentsContext);
@@ -80,10 +81,10 @@ const LeaderboardResults = ({ isOpen, setIsOpen, stdId, course, batchName, handl
             Leaderboard 
             <LeaderboardRounded fontSize='medium' sx={{marginLeft : '10px'}} />
         </DialogTitle>
-        {Array.isArray(studentData) && studentData.length > 0 && Array.isArray(topStdData) && topStdData.length === 3 && topStdData.every(data => data.Score > 0) ? 
+        {Array.isArray(studentData) && studentData.length > 0 && parseInt(DateTime('Year')) < 2025 && Array.isArray(topStdData) && topStdData.length === 3 && topStdData.every(data => data.Score > 0) ? 
         <DialogContent className='w-full h-[40rem] flex flex-col items-center justify-start'>
             <Box className='flex items-end justify-evenly w-full h-1/2'>
-                {Array.isArray(topStdData) && topStdData.length > 0 ? [16,32,24].map((no,index)=>
+                {Array.isArray(topStdData) && topStdData.length > 0 && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? [16,32,24].map((no,index)=>
                         <Box key={index} className={`relative w-16 h-${no} ${index === 0 ? 'bg-[#d5d5d5]' : index === 1 ? 'bg-[#ffdc69]' : 'bg-[#ffd1b8]'} rounded-md pt-3`}>
                             <Box className={`absolute w-full h-28 -top-28 flex flex-col items-center justify-evenly`}>
                                 {index === 1 && <img src='/images/crown.png' width='50px' alt='' className='absolute -top-9' />}
@@ -98,7 +99,7 @@ const LeaderboardResults = ({ isOpen, setIsOpen, stdId, course, batchName, handl
 
             <Box className='w-full h-[55%] border-2 mt-1 rounded-md overflow-hidden'>
                 <Box className='w-full h-[8%] flex items-center justify-between'>
-                    {[15,70,15].map((no,index)=>(
+                    {parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 && [15,70,15].map((no,index)=>(
                         <Typography key={index} className={`w-[${no}%] h-full flex items-center' ${index === 1 ? 'justify-start pl-14' : 'justify-center'}`} sx={{fontWeight : 'bold'}}>
                             {index === 0 ? 'Rank' : index === 1 ? 'Name' : 'Score'}
                         </Typography>
@@ -106,7 +107,7 @@ const LeaderboardResults = ({ isOpen, setIsOpen, stdId, course, batchName, handl
                 </Box>
                 <Divider/>
                 <Box className={`w-full overflow-auto`} sx={{height : isSelf ? '90%' : '78%', scrollbarWidth : 'none'}}>
-                    {Array.isArray(studentData) && studentData.length > 0 ? studentData.map((data,index)=>(
+                    {Array.isArray(studentData) && studentData.length > 0 && parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? studentData.map((data,index)=>(
                     !data.Self && <>
                     <Box className={`w-full flex items-center justify-between`} sx={{height : isSelf ? '15%' : '16%'}}>
                     <Typography className='w-[15%] text-center'>{index + 4}</Typography>

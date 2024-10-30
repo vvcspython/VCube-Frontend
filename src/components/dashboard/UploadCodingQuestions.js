@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Autocomplete, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { AddRounded, ChangeCircleRounded, CloseRounded, RemoveRounded } from '@mui/icons-material';
 import { AssessmentContext } from '../api/Assessment';
-import { DateTime } from '../date-time';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
@@ -184,9 +183,9 @@ const UploadCodingQuestions = ({ isOpen, setIsOpen, selectedCourse, selectedBatc
         <DialogContent className='max-h-[40rem] overflow-y-auto' sx={{scrollbarWidth : 'thin'}}>
             <Box className='pt-3 flex flex-col items-center justify-start h-80'>
                 <TextField className='w-full h-[5.50rem]' value={title} inputProps={{ maxLength : 40 }} onChange={(e)=>setTitle(e.target.value)}
-                  InputLabelProps={{ shrink: title ? true : false }} label='Question Title'/>
+                InputLabelProps={{ shrink: title ? true : false }} label='Question Title'/>
                 <TextField multiline rows={7} onChange={(e)=>setQuestion(e.target.value)} value={question}
-                 InputLabelProps={{ shrink: question ? true : false }} className='w-full' label='Your Question Here...'/>
+                InputLabelProps={{ shrink: question ? true : false }} className='w-full' label='Your Question Here...'/>
             </Box>
             <Box className='w-full flex items-center justify-between'>
                 {[0,1].map(idx=><Box className='w-[48%]'>
@@ -303,7 +302,7 @@ const UploadCodingQuestions = ({ isOpen, setIsOpen, selectedCourse, selectedBatc
         </DialogContent>
         <DialogActions>
             <Button variant='outlined' onClick={handleClose}>Close</Button>
-            <Button variant='contained' onClick={()=>setSelectType(false)}>Continue</Button>
+            <Button variant='contained' onClick={()=>setSelectType(false)} disabled={!assignmentType || assignmentType === null}>Continue</Button>
         </DialogActions>
     </Dialog>
     </>

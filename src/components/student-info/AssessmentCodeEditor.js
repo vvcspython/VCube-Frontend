@@ -155,7 +155,7 @@ const AssessmentCodeEditor = ({ isOpen, setIsOpen, stdId, handleShowSnackbar, so
         setIsOpen(false);
         setPopUp(false);
     }, 11000);
-    setTimeoutId(id);
+        setTimeoutId(id);
     };
 
     const handleFullscreenChange = () => {
@@ -176,7 +176,7 @@ const AssessmentCodeEditor = ({ isOpen, setIsOpen, stdId, handleShowSnackbar, so
         return () => {
             document.removeEventListener('fullscreenchange', handleFullscreenChange);
             if (timeoutId) {
-            clearTimeout(timeoutId);
+                clearTimeout(timeoutId);
             }
         };
         }, [timeoutId]);

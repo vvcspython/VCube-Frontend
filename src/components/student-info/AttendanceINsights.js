@@ -4,6 +4,7 @@ import { Box, Button, FormControl, IconButton, InputLabel, MenuItem, Select, Too
 import { StudentAttendanceCalendar } from './AddAtendanceCalender';
 import { CalendarMonthRounded, ChecklistRounded } from '@mui/icons-material';
 import { StudentsContext } from '../api/students';
+import { DateTime } from '../date-time';
 
 const AttendanceINsights = ({ batchAttendanceData, stdAttendanceData, selectedYear, setSelectedYear, JoiningDate, stdId, handleShowSnackbar, name, phone }) => {
   const { fetchStudentWatchTimeData, fetchAssignmentResults } = useContext(StudentsContext);
@@ -174,7 +175,7 @@ const AttendanceINsights = ({ batchAttendanceData, stdAttendanceData, selectedYe
       {selectedYear && <Box className='w-[900px] -mt-5 flex flex-row items-center justify-between mb-10'>
         {Array.isArray(batchDays) && batchDays.map((value,index)=>(
           <Tooltip title='View Monthly Attendance Calendar' arrow>
-            <IconButton key={index} onClick={(e)=>handleClick(e,index,value)} sx={{width : '40px',height : '40px',display : 'flex', alignItems : 'center', justifyContent : 'center'}} color='primary'>{value}</IconButton>
+            <IconButton key={index} onClick={(e)=>parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? handleClick(e,index,value) : handleShowSnackbar('error','Something went wrong. Please try again later.')} sx={{width : '40px',height : '40px',display : 'flex', alignItems : 'center', justifyContent : 'center'}} color='primary'>{value}</IconButton>
           </Tooltip>))}
       </Box>}
       <Box className='w-[80%] flex flex-row items-center justify-evenly mt-5'>
@@ -196,7 +197,10 @@ const AttendanceINsights = ({ batchAttendanceData, stdAttendanceData, selectedYe
             <Select
               value={selectedYear}
               onChange={(e)=>{setSelectedYear(e.target.value);}}>
-              {years.map(year=><MenuItem value={year}>{year}</MenuItem>)}
+                <MenuItem value='2021'>2021</MenuItem>
+                <MenuItem value='2022'>2022</MenuItem>
+                <MenuItem value='2023'>2023</MenuItem>
+                <MenuItem value='2024'>2024</MenuItem>
             </Select>
           </FormControl>
       </Box>

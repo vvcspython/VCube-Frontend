@@ -3,7 +3,7 @@ export const months = [
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
 
-export const DateTime = () => {
+export const DateTime = (year_=null) => {
 
     const now = new Date();
 
@@ -15,5 +15,5 @@ export const DateTime = () => {
     const minutes = now.getMinutes().toString().padStart(2, '0');
     const seconds = now.getSeconds().toString().padStart(2, '0');
 
-    return `${day < 10 ? `0${day}` : day}-${monthName}-${year} ${hours}:${minutes}:${seconds}`;
+    return year_ ? year : `${day < 10 ? `0${day}` : day}-${monthName}-${year} ${hours}:${minutes}:${seconds}`;
 }

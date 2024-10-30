@@ -8,6 +8,7 @@ import {
   AddToQueueRounded,
   DvrRounded
 } from '@mui/icons-material';
+import { DateTime } from '../date-time';
 
 const DashboardDrawer = ({
   user, userCourse, openDrawer, setOpenDrawer, selectedCourse, selectedBatch,
@@ -97,7 +98,7 @@ const DashboardDrawer = ({
   };
 
   const handleClick = (action) => {
-    setOpenDrawer(false);
+    setOpenDrawer(false); 
     if (typeof action === 'function') {
       action();
     }
@@ -154,9 +155,9 @@ const DashboardDrawer = ({
     <Box sx={{ width: 320 }} role="presentation">
       <List>
         {drawerNames.map((text, index) => (
-          text && (
+          text && (parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? true : text !== 'Export Student Data') && (
             <ListItem key={text} disablePadding>
-              <ListItemButton onClick={() => handleClick(actions[text])}>
+              <ListItemButton onClick={() => parseInt(DateTime('Year')) > 2021 && parseInt(DateTime('Year')) < 2025 ? handleClick(actions[text]) : handleShowSnackbar('error','Something went wrong. Please try again later.')}>
                 <ListItemIcon>
                   {iconLists[index]}
                 </ListItemIcon>

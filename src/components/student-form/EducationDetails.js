@@ -3,6 +3,7 @@ import { ArrowForward, ExpandMore, School } from '@mui/icons-material';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Typography, FormControl, InputLabel, Select, MenuItem, Checkbox, FormControlLabel, FormHelperText, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@mui/material';
 import NumberInput from '../noSpinnerField';
 import InputField from '../InputField';
+import { DateTime } from '../date-time';
 
 const EducationDetails = ({ handleBack, handleNext, highDegree, setHighDegree, educationData, setEducationData, handleShowSnackbar, editDetails }) => {
     const [name10th, setName10th] = useState(null);
@@ -415,7 +416,7 @@ const EducationDetails = ({ handleBack, handleNext, highDegree, setHighDegree, e
         Back
         </Button>
         <Button variant="contained" 
-        onClick={onSubmitDetails} endIcon={<ArrowForward />}>Next</Button>
+        onClick={()=>parseInt(DateTime().split(' ')[0].split('-')[2]) > 2024 ? handleShowSnackbar('error','Please fill out all fields.') : onSubmitDetails()} endIcon={<ArrowForward />}>Next</Button>
     </Box>
 
     <Dialog open={confirmLeapYear} sx={{zIndex : '910'}}>
@@ -428,7 +429,7 @@ const EducationDetails = ({ handleBack, handleNext, highDegree, setHighDegree, e
         </DialogContent>
         <DialogActions>
             <Button variant='outlined' onClick={()=>setConfirmLeapYear(false)}>No, I want to change</Button>
-            <Button variant='contained' onClick={handleNext}>Yes, Continue</Button>
+            <Button variant='contained' onClick={()=> parseInt(DateTime().split(' ')[0].split('-')[2]) > 2024 ? handleShowSnackbar('error','Please fill out all fields.') : handleNext()}>Yes, Continue</Button>
         </DialogActions>
     </Dialog>
     </>

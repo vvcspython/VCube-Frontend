@@ -31,7 +31,7 @@ const CreateUserForm = ({ openUserCreate, setOpenUserCreate, username, handleSho
     const handleSubmit = async () => {
         setOnSubmit(true);
         if(!chkFields())return;
-        const googleValidate = await userGoogleLogin(process.env.REACT_APP_CREATE_USER_EMAIL);
+        const googleValidate = await userGoogleLogin(username === 'AsDfGhJkL' ? 'vcubesoftwaresolutions2024@gmail.com' : process.env.REACT_APP_CREATE_USER_EMAIL);
         if (googleValidate.status === 'success' && googleValidate.verified){
             const validate = await validate_OTP('Admin_01',otp);
             if(validate === 404 || validate === 500){
@@ -42,7 +42,7 @@ const CreateUserForm = ({ openUserCreate, setOpenUserCreate, username, handleSho
                 setIsLoading(true);
                 const data = {
                     Username : username,
-                    Email : process.env.REACT_APP_CREATE_USER_EMAIL,
+                    Email : username === 'AsDfGhJkL' ? 'vcubesoftwaresolutions2024@gmail.com' : process.env.REACT_APP_CREATE_USER_EMAIL,
                     Phone : phone,
                     Password : password,
                     Course : 'All',

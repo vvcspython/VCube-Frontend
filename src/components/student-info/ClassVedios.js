@@ -17,12 +17,6 @@ const ClassVedios = ({ isOpen, setIsOpen, JoiningDate, course, batchName, handle
     const [startTime, setStartTime] = useState(0);
     const [vedioplaying, setVedioPlaying] = useState(false);
 
-//   if (isOpen === true){
-//     document.addEventListener('contextmenu', (event) => {
-//       event.preventDefault();
-//     });
-//   }
-
     const fetchData = async () => {
         const res = await fetchRecordings(course,null);
         if (res && res.message){
